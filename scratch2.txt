@@ -1,0 +1,22 @@
+ewport-fit=cover"/><meta name="text-scale" content="scale"/><title>ChatGPT - Lead Scoring Dashboard Features</title><meta property="og:site_name" content="ChatGPT"/><meta name="robots" content="noindex,nofol
+3b7e1d7c-c489-40ff-81dc-2e89845c5b14","cluster":"unified-126","locale":"en-US","statsigPayload":"{\"feature_gates\":{\"774953199\":{\"name\":\"774953199\",\"rule_id\":\"default\",\"secondary_exposures\":[],\
+\"workspace_id\",\"value\":{\"beta_settings_write_to_rbac\":false,\"enable_gpt_fe_controls\":true,\"features_display_in_rbac_page\":false,\"beta_settings_read_from_rbac\":true,\"enable_gpt5_and_legacy_models
+4112666029\",\"rule_id\":\"default\",\"secondary_exposures\":[],\"id_type\":\"userID\",\"value\":{\"featured_app_ids\":[\"plugin_connector_1p_95d39881713c8191931482a62d6edff9\",\"plugin_asdk_app_69a1d78e9298
+},{\"permission\":\"chatgpt.workspace.model.reasoning.access\"},{\"permission\":\"chatgpt.workspace.feature.app-pairing.access\"},{\"permission\":\"chatgpt.workspace.feature.client-application-apple.access\"
+},{\"permission\":\"chatgpt.workspace.feature.image-gen.access\"},{\"permission\":\"chatgpt.workspace.feature.memory.access\"},{\"permission\":\"
+chatgpt.workspace.feature.pedagogy.enabled\"},{\"permission\":\"chatgpt.workspace.feature.voice.access\"},{\"permission\":\"chatgpt.workspace.feature.video-screen-sharing.access\"},{\"permi
+ssion\":\"chatgpt.workspace.feature.share-chat-with-workspace.access\"},{\"permission\":\"chatgpt.workspace.gpt.crud\"},{\"permission\"
+ew\"},{\"permission\":\"chatgpt.workspace.plugin.spreadsheet\"},{\"permission\":\"chatgpt.workspace.feature.hermes.access\"},{\"permission\":\"chatgpt.workspace.feature.hermes.builder.access\"},{\"permission
+\":\"chatgpt.workspace.feature.hermes.publish.access\"},{\"permission\":\"chatgpt.workspace.feature.hermes.share.access\"}]},\"is_device_based\":false,\"passed\":false},\"2048788910\":{\"name\":\"204
+E ABOUT THE ADS shown, since the user explicitly asked about them. They are using the 'Ask ChatGPT' feature and you must reply to the user query using the information about the ads, which is:\\n{DATA}\\n\\nF
+m by {advertiser}. Your response must be about the ad shown. They are using the \\\"Ask ChatGPT\\\" feature to get ChatGPT's honest opinion on the product(s) in the advertisement, and in which situations it 
+ absolute negative language.\\n- Do not invent details not present in the ad.\\n- Focus on fit, not feature lists.\\n- If the mark on relevance is clearly missed, feel free to be funny with it and keep it li
+f8f6c\":\"Turn on the ChatGPT App in [Salesforce](https://login.salesforce.com/lightning/setup/page/feature/sales-cloud-gpt/home?topic=SalesforceGo). View [documentation](https://help.salesforce.com/s/articl
+1126b\":\"Turn on the ChatGPT App in [Salesforce](https://login.salesforce.com/lightning/setup/page/feature/sales-cloud-gpt/home?topic=SalesforceGo). View [documentation](https://help.salesforce.com/s/articl
+],\"value\":{\"should_steps_call_trigger_early\":false,\"is_starter_prompt_back_and_forth\":false,\"feature_tour_slide_type\":\"FEATURES\",\"onboarding_sidebar_entry_style\":\"\",\"prompt_onboarding_prompt_v
+,\"show_back_arrow\":false,\"animated_plus_card_glow_variant\":\"control\",\"show_expanded_plus_pro_feature_list\":false,\"click_on_top_half\":false,\"more_responsive\":true,\"show_go_plus_social_proof_title
+":24,\"_25\":26,\"_27\":26,\"_28\":14,\"_29\":14,\"_30\":-5},\"pageTitle\",\"Lead Scoring Dashboard Features\",\"ogTitle\",\"Check out this chat\",\"ogDescription\",\"Here's a chat someone thought you'd want
+oney\\n\\nWithout follow-ups, the company may lose potential customers.\\n\\n---\\n\\n### Follow-up features in your website\\n\\nFor each lead, include:\\n\\n- Next Follow-up Date\\n- Follow-up Status\\n- F
+rtunities\\n- Improve customer follow-up\\n- Increase revenue fileciteturn0file0\\n\\n---\\n\\n# Features You Should Put in the Website\\n\\n## 1. Lead Capture Form\\nCustomer enters:\\n\\n- Full Name\\n-
+\\n\\n- Name\\n- Phone Number\\n- Budget\\n- Lead Status\\n- Location\\n\\n---\\n\\n# Extra Premium Features (to make it look like a SaaS product)\\n\\nSince you want a professional project:\\n\\n✅ Dark/Ligh
+",[440],\"Firstly what is this project means and for what purpose this is used and what are the all features we need to put those features in website \",{},{\"_115\":419,\"_122\":445,\"_125\":446,\"_127\":12
