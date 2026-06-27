@@ -48,19 +48,48 @@ export default function Sidebar({ isOpen, onToggle }: SidebarProps) {
         }}
       >
         {/* Logo */}
-        <div className="sidebar-logo" style={{ justifyContent: collapsed ? 'center' : 'flex-start' }}>
-          <div className="sidebar-logo-icon">
-            <Zap size={20} />
-          </div>
-          {!collapsed && (
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <span style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 18, color: 'var(--color-text-primary)', lineHeight: 1.2 }}>
-                LeadIQ
-              </span>
-              <span style={{ fontSize: 10, fontWeight: 600, color: 'var(--color-brand-500)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-                AI Platform
-              </span>
+        <div
+          style={{
+            borderBottom: '1px solid var(--color-border)',
+            overflow: 'hidden',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: collapsed ? 'center' : 'flex-start',
+            padding: collapsed ? '8px' : '0 8px',
+          }}
+        >
+          {collapsed ? (
+            <div style={{
+              width: 52, height: 52, borderRadius: 8, overflow: 'hidden',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}>
+              <img
+                src="/logo.png"
+                alt="Logo"
+                className="theme-logo"
+                style={{
+                  width: 130,
+                  height: 'auto',
+                  objectFit: 'contain',
+                  marginTop: -30,
+                  marginBottom: -30,
+                }}
+              />
             </div>
+          ) : (
+            <img
+              src="/logo.png"
+              alt="Lohitha Dharma Projects Pvt. Ltd."
+              className="theme-logo"
+              style={{
+                width: '90%',
+                height: 'auto',
+                objectFit: 'contain',
+                display: 'block',
+                marginTop: '-22%',
+                marginBottom: '-22%',
+              }}
+            />
           )}
         </div>
 

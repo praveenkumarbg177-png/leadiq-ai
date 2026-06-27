@@ -1,18 +1,20 @@
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import type { User, UserRole } from '../types';
-import { auth } from '../config/firebase';
 import { 
   signInWithEmailAndPassword, 
   createUserWithEmailAndPassword, 
   signOut, 
   onAuthStateChanged,
-  updateProfile
+  updateProfile,
+  signInWithPopup
 } from 'firebase/auth';
+import { auth, googleProvider } from '../config/firebase';
 
 interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
   login: (email: string, password: string) => Promise<boolean>;
+  loginWithGoogle: () => Promise<boolean>;
   logout: () => void;
   signup: (name: string, email: string, password: string) => Promise<boolean>;
   switchRole: (role: UserRole) => void;
@@ -81,6 +83,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  const loginWithGoogle = async (): Promise<boolean> => {
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const firebaseUser = result.user;
+      setUser({
+        id: firebaseUser.uid,
+        name: firebaseUser.displayName || firebaseUser.email?.split('@')[0] || 'User',
+        email: firebaseUser.email || '',
+        role: 'admin',
+        joinedAt: firebaseUser.metadata.creationTime || new Date().toISOString(),
+        isActive: true,
+        lastActive: firebaseUser.metadata.lastSignInTime || new Date().toISOString(),
+        leadsAssigned: 0,
+        leadsConverted: 0,
+      });
+      return true;
+    } catch (e: any) {
+      console.error('Google sign-in failed', e);
+      return false;
+    }
+  };
+
   const signup = async (name: string, email: string, password: string): Promise<boolean> => {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -121,7 +145,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated: !!user, login, logout, signup, switchRole }}>
+    <AuthContext.Provider value={{ user, isAuthenticated: !!user, login, loginWithGoogle, logout, signup, switchRole }}>
       {!loading && children}
     </AuthContext.Provider>
   );

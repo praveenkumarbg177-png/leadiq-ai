@@ -17,7 +17,7 @@ services:
           name: leadiq-db
           property: connectionString
       - key: FRONTEND_URL
-        value: https://your-leadiq-app.vercel.app  # UPDATE THIS after Vercel deploy
+        value: https://frontend-six-azure-74.vercel.app
 
 databases:
   - name: leadiq-db

@@ -11,9 +11,18 @@ export default function Settings() {
   const [profileData, setProfileData] = useState({
     name: user?.name || '',
     email: user?.email || '',
-    phone: user?.phone || ''
+    phone: user?.phone || '',
+    photo: '' // Added photo property
   });
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+
+  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const url = URL.createObjectURL(file);
+      setProfileData(prev => ({ ...prev, photo: url }));
+    }
+  };
 
   const handleSave = () => {
     alert(`Settings saved successfully for ${activeTab}!`);
@@ -53,12 +62,19 @@ export default function Settings() {
               <h2 style={{ fontSize: 20, fontWeight: 700, marginBottom: 24, paddingBottom: 16, borderBottom: '1px solid var(--color-border)' }}>Profile Information</h2>
               
               <div style={{ display: 'flex', alignItems: 'center', gap: 24, marginBottom: 32 }}>
-                <div className="avatar avatar-xl" style={{ fontSize: 24 }}>
-                  {profileData.name.split(' ').map(n => n[0]).join('') || 'U'}
+                <div className="avatar avatar-xl" style={{ fontSize: 24, position: 'relative', overflow: 'hidden' }}>
+                  {profileData.photo ? (
+                    <img src={profileData.photo} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  ) : (
+                    profileData.name.split(' ').map(n => n[0]).join('') || 'U'
+                  )}
                 </div>
                 <div style={{ display: 'flex', gap: 12 }}>
-                  <button className="btn btn-secondary">Upload New</button>
-                  <button className="btn btn-ghost" style={{ color: 'var(--color-danger)' }}>Remove</button>
+                  <label className="btn btn-secondary" style={{ cursor: 'pointer', margin: 0 }}>
+                    Upload New
+                    <input type="file" accept="image/*" style={{ display: 'none' }} onChange={handlePhotoUpload} />
+                  </label>
+                  <button className="btn btn-ghost" style={{ color: 'var(--color-danger)' }} onClick={() => setProfileData(prev => ({ ...prev, photo: '' }))}>Remove</button>
                 </div>
               </div>
 
