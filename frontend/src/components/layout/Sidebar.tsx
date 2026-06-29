@@ -151,8 +151,12 @@ export default function Sidebar({ isOpen, onToggle }: SidebarProps) {
               borderRadius: 'var(--radius-md)',
               background: 'var(--color-bg-hover)',
             }}>
-              <div className="avatar" style={{ width: 32, height: 32, fontSize: 12 }}>
-                {user.name.split(' ').map(n => n[0]).join('')}
+              <div className="avatar" style={{ width: 32, height: 32, fontSize: 12, position: 'relative', overflow: 'hidden' }}>
+                {user.avatar ? (
+                  <img src={user.avatar} alt="User" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                ) : (
+                  user.name.split(' ').map(n => n[0]).join('')
+                )}
               </div>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--color-text-primary)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>

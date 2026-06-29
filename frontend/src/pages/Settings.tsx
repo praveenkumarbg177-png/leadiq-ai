@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { User, Bell, Shield, Palette } from 'lucide-react';
 
 export default function Settings() {
-  const { user } = useAuth();
+  const { user, updateProfile } = useAuth();
   const { theme, toggleTheme } = useTheme();
 
   const [activeTab, setActiveTab] = useState('Profile');
@@ -12,19 +12,41 @@ export default function Settings() {
     name: user?.name || '',
     email: user?.email || '',
     phone: user?.phone || '',
-    photo: '' // Added photo property
+    photo: user?.avatar || '' // Added photo property
   });
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+
+  useEffect(() => {
+    if (user) {
+      setProfileData(prev => ({
+        ...prev,
+        name: prev.name || user.name || '',
+        email: prev.email || user.email || '',
+        phone: prev.phone || user.phone || '',
+        photo: prev.photo || user.avatar || ''
+      }));
+    }
+  }, [user]);
 
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const url = URL.createObjectURL(file);
-      setProfileData(prev => ({ ...prev, photo: url }));
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfileData(prev => ({ ...prev, photo: reader.result as string }));
+      };
+      reader.readAsDataURL(file);
     }
   };
 
   const handleSave = () => {
+    if (activeTab === 'Profile') {
+      updateProfile({
+        name: profileData.name,
+        phone: profileData.phone,
+        avatar: profileData.photo
+      });
+    }
     alert(`Settings saved successfully for ${activeTab}!`);
   };
 

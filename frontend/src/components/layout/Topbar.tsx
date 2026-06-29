@@ -195,8 +195,12 @@ export default function Topbar({ onMenuToggle }: TopbarProps) {
             }}
             id="profile-btn"
           >
-            <div className="avatar" style={{ width: 32, height: 32, fontSize: 12 }}>
-              {user?.name.split(' ').map(n => n[0]).join('') || 'U'}
+            <div className="avatar" style={{ width: 32, height: 32, fontSize: 12, position: 'relative', overflow: 'hidden' }}>
+              {user?.avatar ? (
+                <img src={user.avatar} alt="User" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              ) : (
+                user?.name.split(' ').map(n => n[0]).join('') || 'U'
+              )}
             </div>
             <ChevronDown size={14} style={{ color: 'var(--color-text-tertiary)' }} />
           </button>
