@@ -15,10 +15,19 @@ def create_app(config_class=Config):
     if db_url and db_url.startswith('postgres://'):
         app.config['SQLALCHEMY_DATABASE_URI'] = db_url.replace('postgres://', 'postgresql://', 1)
 
-    # Initialize extensions — allow frontend URL (configurable via env var)
-    # Support multiple comma-separated origins
-    frontend_url = app.config['FRONTEND_URL']
-    allowed_origins = [url.strip() for url in frontend_url.split(',')] if frontend_url != '*' else '*'
+    # Initialize extensions — allow frontend URLs
+    # Always include known Vercel domains + configurable env var origins
+    known_origins = [
+        'https://lohitha-dharma-lead.vercel.app',
+        'https://frontend-six-azure-74.vercel.app',
+        'http://localhost:5173',
+    ]
+    frontend_url = app.config.get('FRONTEND_URL', '*')
+    if frontend_url == '*':
+        allowed_origins = '*'
+    else:
+        env_origins = [url.strip() for url in frontend_url.split(',')]
+        allowed_origins = list(set(known_origins + env_origins))
     CORS(app, resources={r"/api/*": {"origins": allowed_origins}}, supports_credentials=True)
     db.init_app(app)
     Migrate(app, db)
