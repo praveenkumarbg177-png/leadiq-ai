@@ -43,6 +43,31 @@ def create_app(config_class=Config):
 
 app = create_app()
 
+# Ensure DB tables exist and admin user is seeded on startup
+with app.app_context():
+    from models import db as _db, User
+    from werkzeug.security import generate_password_hash as _gph
+    try:
+        _db.create_all()
+        if not User.query.filter_by(email='admin@leadiq.com').first():
+            _db.session.add(User(
+                email='admin@leadiq.com',
+                password=_gph('admin123'),
+                name='System Admin',
+                role='ADMIN'
+            ))
+            _db.session.add(User(
+                email='agent@leadiq.com',
+                password=_gph('agent123'),
+                name='Demo Agent',
+                role='SALES_AGENT'
+            ))
+            _db.session.commit()
+            print("✅ DB seeded with admin + agent users.")
+    except Exception as seed_err:
+        print(f"⚠️  DB seed error (may be normal on first run): {seed_err}")
+
+
 if __name__ == '__main__':
     # Initialize the database for SQLite fallback if it doesn't exist
     with app.app_context():
