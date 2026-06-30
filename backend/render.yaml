@@ -17,7 +17,7 @@ services:
           name: leadiq-db
           property: connectionString
       - key: FRONTEND_URL
-        value: https://frontend-six-azure-74.vercel.app
+        value: https://lohitha-dharma-lead.vercel.app,https://frontend-six-azure-74.vercel.app
 
 databases:
   - name: leadiq-db

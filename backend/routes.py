@@ -98,41 +98,47 @@ def get_leads(current_user):
 def create_lead(current_user):
     data = request.get_json()
     
-    score_data = calculate_lead_score(data)
+    try:
+        score_data = calculate_lead_score(data)
+        
+        new_lead = Lead(
+            name=data.get('name'),
+            email=data.get('email'),
+            phone=data.get('phone'),
+            company=data.get('company'),
+            location=data.get('location'),
+            budget=float(data.get('budget', 0)),
+            source=data.get('source', 'Website'),
+            status='NEW',
+            score=score_data['score'],
+            score_category=score_data['score_category'],
+            urgency=int(data.get('urgency', 0)),
+            site_visit_interest=int(data.get('site_visit_interest', 0)),
+            questions_asked=int(data.get('questions_asked', 0)),
+            property_interest=data.get('property_interest'),
+            property_type=data.get('property_type'),
+            notes=data.get('notes'),
+            ai_next_actions=score_data['ai_next_actions'],
+            assigned_to_id=current_user.id
+        )
+        db.session.add(new_lead)
+        db.session.commit()
+        
+        activity = Activity(
+            type='LEAD_CREATED',
+            description=f"Lead {new_lead.name} was created with score {new_lead.score} ({new_lead.score_category}).",
+            lead_id=new_lead.id,
+            user_id=current_user.id
+        )
+        db.session.add(activity)
+        db.session.commit()
+        
+        return jsonify({'message': 'Lead created', 'id': new_lead.id, 'score': new_lead.score, 'category': new_lead.score_category}), 201
     
-    new_lead = Lead(
-        name=data.get('name'),
-        email=data.get('email'),
-        phone=data.get('phone'),
-        company=data.get('company'),
-        location=data.get('location'),
-        budget=float(data.get('budget', 0)),
-        source=data.get('source', 'Website'),
-        status='NEW',
-        score=score_data['score'],
-        score_category=score_data['score_category'],
-        urgency=int(data.get('urgency', 0)),
-        site_visit_interest=int(data.get('site_visit_interest', 0)),
-        questions_asked=int(data.get('questions_asked', 0)),
-        property_interest=data.get('property_interest'),
-        property_type=data.get('property_type'),
-        notes=data.get('notes'),
-        ai_next_actions=score_data['ai_next_actions'],
-        assigned_to_id=current_user.id
-    )
-    db.session.add(new_lead)
-    db.session.commit()
-    
-    activity = Activity(
-        type='LEAD_CREATED',
-        description=f"Lead {new_lead.name} was created with score {new_lead.score} ({new_lead.score_category}).",
-        lead_id=new_lead.id,
-        user_id=current_user.id
-    )
-    db.session.add(activity)
-    db.session.commit()
-    
-    return jsonify({'message': 'Lead created', 'id': new_lead.id, 'score': new_lead.score, 'category': new_lead.score_category}), 201
+    except Exception as e:
+        db.session.rollback()
+        current_app.logger.error(f"Error creating lead: {str(e)}")
+        return jsonify({'message': f'Failed to create lead: {str(e)}'}), 500
 
 @api_bp.route('/leads/<lead_id>', methods=['GET'])
 @token_required

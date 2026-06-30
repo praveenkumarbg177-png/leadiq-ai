@@ -109,7 +109,7 @@ export default function LeadManagement() {
       setTimeout(() => setSuccessMsg(''), 4000);
     } catch (err: any) {
       console.error(err);
-      setErrorMsg(`❌ Failed to save lead: ${err?.message || 'Network error. Check if backend is reachable.'}`);
+      setErrorMsg(`Failed to save lead: ${err?.message || 'Network error. Check if backend is reachable.'}`);
       setTimeout(() => setErrorMsg(''), 6000);
     } finally {
       setSubmitting(false);
@@ -142,7 +142,7 @@ export default function LeadManagement() {
         {errorMsg && (
           <motion.div
             initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }}
-            style={{ position: 'fixed', top: 24, right: 24, zIndex: 999, background: 'var(--color-danger, #ef4444)', color: 'white', padding: '12px 20px', borderRadius: 12, fontWeight: 600, fontSize: 14, boxShadow: 'var(--shadow-lg)', display: 'flex', alignItems: 'center', gap: 8, maxWidth: 420 }}
+            style={{ position: 'fixed', top: 24, right: 24, zIndex: 9999, background: '#ef4444', color: 'white', padding: '12px 20px', borderRadius: 12, fontWeight: 600, fontSize: 14, boxShadow: '0 8px 32px rgba(0,0,0,0.3)', display: 'flex', alignItems: 'center', gap: 8, maxWidth: 440 }}
           >
             <X size={18} /> {errorMsg}
           </motion.div>
