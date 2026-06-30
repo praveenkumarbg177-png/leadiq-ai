@@ -31,6 +31,7 @@ export default function LeadManagement() {
   const [filterSource, setFilterSource] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [successMsg, setSuccessMsg] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
 
   useEffect(() => {
     fetchLeads();
@@ -106,8 +107,10 @@ export default function LeadManagement() {
       form.reset();
       fetchLeads();
       setTimeout(() => setSuccessMsg(''), 4000);
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
+      setErrorMsg(`❌ Failed to save lead: ${err?.message || 'Network error. Check if backend is reachable.'}`);
+      setTimeout(() => setErrorMsg(''), 6000);
     } finally {
       setSubmitting(false);
     }
@@ -130,6 +133,18 @@ export default function LeadManagement() {
             style={{ position: 'fixed', top: 24, right: 24, zIndex: 999, background: 'var(--color-success)', color: 'white', padding: '12px 20px', borderRadius: 12, fontWeight: 600, fontSize: 14, boxShadow: 'var(--shadow-lg)', display: 'flex', alignItems: 'center', gap: 8 }}
           >
             <CheckCircle size={18} /> {successMsg}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Error Toast */}
+      <AnimatePresence>
+        {errorMsg && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }}
+            style={{ position: 'fixed', top: 24, right: 24, zIndex: 999, background: 'var(--color-danger, #ef4444)', color: 'white', padding: '12px 20px', borderRadius: 12, fontWeight: 600, fontSize: 14, boxShadow: 'var(--shadow-lg)', display: 'flex', alignItems: 'center', gap: 8, maxWidth: 420 }}
+          >
+            <X size={18} /> {errorMsg}
           </motion.div>
         )}
       </AnimatePresence>
