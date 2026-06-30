@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, List, CalendarDays, Clock, CheckCircle, AlertCircle, Phone, Mail, Users, MapPin } from 'lucide-react';
-import { mockAllFollowUps } from '../data/mockData';
+import { api } from '../services/api';
 import { useNavigate } from 'react-router-dom';
 
 const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -31,9 +31,23 @@ function getStatusBg(status: string) {
 export default function FollowUpCalendar() {
   const navigate = useNavigate();
   const [viewMode, setViewMode] = useState<'calendar' | 'list'>('calendar');
-  const [currentDate, setCurrentDate] = useState(new Date(2025, 5, 1)); // June 2025 to match mock data
+  const [currentDate, setCurrentDate] = useState(new Date()); 
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [filterStatus, setFilterStatus] = useState<'all' | 'pending' | 'completed' | 'missed'>('all');
+  const [followUps, setFollowUps] = useState<any[]>([]);
+
+  useEffect(() => {
+    fetchFollowUps();
+  }, []);
+
+  const fetchFollowUps = async () => {
+    try {
+      const res = await api.get('/followups');
+      setFollowUps(res.data || []);
+    } catch (err) {
+      console.error('Failed to fetch follow-ups:', err);
+    }
+  };
 
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();
@@ -55,7 +69,7 @@ export default function FollowUpCalendar() {
   }
 
   const getFollowUpsForDate = (date: Date) => {
-    return mockAllFollowUps.filter(fu => {
+    return followUps.filter(fu => {
       const fuDate = new Date(fu.scheduledAt);
       return fuDate.getFullYear() === date.getFullYear() &&
         fuDate.getMonth() === date.getMonth() &&
@@ -63,15 +77,15 @@ export default function FollowUpCalendar() {
     });
   };
 
-  const filteredFollowUps = mockAllFollowUps.filter(fu => filterStatus === 'all' || fu.status === filterStatus);
+  const filteredFollowUps = followUps.filter(fu => filterStatus === 'all' || fu.status === filterStatus);
 
   const selectedFollowUps = selectedDate ? getFollowUpsForDate(selectedDate) : [];
 
   const stats = {
-    total: mockAllFollowUps.length,
-    pending: mockAllFollowUps.filter(f => f.status === 'pending').length,
-    completed: mockAllFollowUps.filter(f => f.status === 'completed').length,
-    missed: mockAllFollowUps.filter(f => f.status === 'missed').length,
+    total: followUps.length,
+    pending: followUps.filter(f => f.status === 'pending').length,
+    completed: followUps.filter(f => f.status === 'completed').length,
+    missed: followUps.filter(f => f.status === 'missed').length,
   };
 
   return (
